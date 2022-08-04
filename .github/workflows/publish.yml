@@ -40,6 +40,6 @@ jobs:
           --tag gnosischain/nethermind:latest-${{ env.NETWORK }}
           -f Dockerfile
 
-      - run: >
+      - run: |
           docker push gnosischain/nethermind:${{ env.UPSTREAM_VERSION }}-${{ env.NETWORK }}
           docker push gnosischain/nethermind:latest-${{ env.NETWORK }}
