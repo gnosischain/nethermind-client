@@ -14,36 +14,36 @@ gnosischain/{client_provider}-{node_type}:{upstream_version}-{testnet}
 i.e.
 
 ```
-docker pull gnosischain/teku:22.8.0-chiado 
+docker pull gnosischain/nethermind:1.13.6-chiado
 ```
 
-The teku client we provide runs validator and beacon together.
+The nethermind works on an execution layer. 
 
 ## Dockerhub 
 
-[Beacon image](https://hub.docker.com/repository/docker/gnosischain/teku)  
+[Beacon image](https://hub.docker.com/repository/docker/gnosischain/nethermind)  
 
 
 ## More information on how the teku client works and can be customized can be found here:  
 
 General  
-https://docs.teku.consensys.net/en/latest/
+https://docs.nethermind.io/nethermind/
 
 CLI Reference  
-https://docs.teku.consensys.net/en/latest/Reference/CLI/CLI-Syntax/
+https://docs.nethermind.io/nethermind/ethereum-client/configuration
 
 
-# Starting teku in beacon und validator mode
-As an example we can run with version 22.8.0 in testnet chiado as beacon: 
+# Starting nethermind in execution mode
+As an example we can run with version 1.13.6 in chiado testnet as execution client: 
 
 ```
-docker pull gnosischain/teku:22.8.0-chiado  
-docker run gnosischain/teku:22.8.0-chiado 
+docker pull gnosischain/nethermind:1.13.6-chiado  
+docker run gnosischain/nethermind:1.13.6-chiado
 ```
 
 Customization through flags: 
 ```
-docker run gnosischain/teku:22.8.0-chiado --enable-db-backup-webhook
+docker run gnosischain/nethermind:1.13.6-chiado --baseDbPath /home/user/my_node/db
 ```
 
 
