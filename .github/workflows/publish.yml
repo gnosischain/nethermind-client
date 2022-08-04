@@ -1,0 +1,43 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: ["main"]
+
+env:
+  UPSTREAM_VERSION: 1.13.6-696975
+  UPSTREAM_DIGEST: sha256:9c57f61c9df16c2e55001c5e5a432c637122fe011721b0ec1ff2f074b61550e9
+  NETWORK: chiado
+
+jobs:
+  push_to_registry:
+    name: Build and Push Docker image
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repo
+        uses: actions/checkout@v2
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Cache Docker layers
+        uses: actions/cache@v2
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-
+
+      - name: Loging to Dockerhub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME  }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN  }}
+
+      # {upstream_image}{testnet}{version_upstream}
+      - run: >
+          docker build .
+          --tag gnosischain/nethermind:${{ env.UPSTREAM_VERSION }}-${{ env.NETWORK }}
+          --build-arg UPSTREAM_DIGEST=${{ env.UPSTREAM_DIGEST }}
+          -f Dockerfile
+
+      - run: docker push gnosischain/nethermind:${{ env.UPSTREAM_VERSION }}-${{ env.NETWORK }}
