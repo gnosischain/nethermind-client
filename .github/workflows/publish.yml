@@ -5,8 +5,7 @@ on:
     branches: ["main"]
 
 env:
-  UPSTREAM_VERSION: 1.13.6-696975
-  UPSTREAM_DIGEST: sha256:9c57f61c9df16c2e55001c5e5a432c637122fe011721b0ec1ff2f074b61550e9
+  UPSTREAM_VERSION: "1.13.6"
   NETWORK: chiado
 
 jobs:
@@ -36,8 +35,11 @@ jobs:
       # {upstream_image}{testnet}{version_upstream}
       - run: >
           docker build .
+          --build-arg UPSTREAM_VERSION=${{ env.UPSTREAM_VERSION }}
           --tag gnosischain/nethermind:${{ env.UPSTREAM_VERSION }}-${{ env.NETWORK }}
-          --build-arg UPSTREAM_DIGEST=${{ env.UPSTREAM_DIGEST }}
+          --tag gnosischain/nethermind:latest-${{ env.NETWORK }}
           -f Dockerfile
 
-      - run: docker push gnosischain/nethermind:${{ env.UPSTREAM_VERSION }}-${{ env.NETWORK }}
+      - run: >
+          docker push gnosischain/nethermind:${{ env.UPSTREAM_VERSION }}-${{ env.NETWORK }}
+          docker push gnosischain/nethermind:latest-${{ env.NETWORK }}
