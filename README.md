@@ -1,51 +1,38 @@
 # Nethermind Client - Docker
 
-This projects builds a customized version of the nethermind client with Gnosischain modifications.
-Those include the integrations with different testnets.
+This projects builds a customized version of the nethermind client with Gnosischain modifications. Those include the integrations with different testnets.
 
-## Image tagging 
+- [gnosischain/nethermind](https://hub.docker.com/repository/docker/gnosischain/nethermind)
 
-Images are referenced under the following pattern. 
-
-```
-gnosischain/{client_provider}-{node_type}:{upstream_version}-{testnet}
-```
-
-i.e.
+Images are referenced under the following pattern `gnosischain/{client_provider}-{node_type}:{upstream_version}-{testnet}` for example
 
 ```
-docker pull gnosischain/nethermind:1.13.6-chiado
+docker pull gnosischain/nethermind:latest-chiado
 ```
 
-The nethermind works on an execution layer. 
+## Nethermind reference
 
-## Dockerhub 
+- General https://docs.nethermind.io/nethermind/
+- CLI Reference https://docs.nethermind.io/nethermind/ethereum-client/configuration
 
-[Beacon image](https://hub.docker.com/repository/docker/gnosischain/nethermind)  
+# Starting nethermind in Chiado testnet
 
-
-## More information on how the teku client works and can be customized can be found here:  
-
-General  
-https://docs.nethermind.io/nethermind/
-
-CLI Reference  
-https://docs.nethermind.io/nethermind/ethereum-client/configuration
-
-
-# Starting nethermind in execution mode
-As an example we can run with version 1.13.6 in chiado testnet as execution client: 
+1. Create a file `./jwtsecret` with a random 32 bytes hex string
 
 ```
-docker pull gnosischain/nethermind:1.13.6-chiado  
-docker run gnosischain/nethermind:1.13.6-chiado
+echo -n 0x$(openssl rand -hex 32 | tr -d "\n") > ./jwtsecret
 ```
 
-Customization through flags: 
+2. Run Nethermind with the `./docker-compose.yml` file as example from this repository.
+
 ```
-docker run gnosischain/nethermind:1.13.6-chiado --baseDbPath /home/user/my_node/db
+docker-compose up -d
 ```
 
+3. Run a consensus client of your choice
 
-
-
+- Lighthouse: https://github.com/gnosischain/lighthouse-client
+- Lodestar: https://github.com/gnosischain/lodestar-client
+- Nimbus: https://github.com/gnosischain/nimbus-client
+- Prysm: https://github.com/gnosischain/prysm-client
+- Teku: https://github.com/gnosischain/teku-client
