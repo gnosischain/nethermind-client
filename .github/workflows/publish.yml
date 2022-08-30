@@ -5,7 +5,7 @@ on:
     branches: ["main"]
 
 env:
-  UPSTREAM_VERSION: "1.13.6"
+  UPSTREAM_VERSION: "gnosis"
   NETWORK: chiado
 
 jobs:
