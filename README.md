@@ -1,5 +1,11 @@
 # Nethermind Client - Docker
 
+----
+
+> DEPRECATED, use nethermindeth/nethermind docker image for Gnosis mainnet and Chiado configs
+
+----
+
 This projects builds a customized version of the nethermind client with Gnosischain modifications. Those include the integrations with different testnets.
 
 - [gnosischain/nethermind](https://hub.docker.com/repository/docker/gnosischain/nethermind)
